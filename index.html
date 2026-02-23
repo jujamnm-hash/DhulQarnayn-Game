@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ذوالقرنین — گەشتی دو ئەفق</title>
+
+  <!-- Three.js r158 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Howler for spatial audio -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <!-- Google Fonts — Arabic/Kurdish-->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════  MAIN MENU  ═══════════════════════ -->
+<div id="main-menu" class="screen active">
+  <div class="menu-bg"></div>
+  <div class="menu-overlay"></div>
+
+  <div class="menu-content">
+    <div class="title-arabic">ذو القرنين</div>
+    <div class="title-sub">گەشتی دو ئەفق</div>
+    <div class="title-eng">JOURNEY OF TWO HORIZONS</div>
+    <div class="menu-divider"></div>
+
+    <div class="menu-buttons">
+      <button class="menu-btn primary" id="btn-start">▶ دەستپێکردنی یاری</button>
+      <button class="menu-btn" id="btn-chapters">📜 بەشەکان</button>
+      <button class="menu-btn" id="btn-lore">📖 مێژوو</button>
+      <button class="menu-btn" id="btn-settings">⚙ ڕێکخستن</button>
+    </div>
+
+    <div class="quran-verse">
+      <span>« وَيَسْأَلُونَكَ عَن ذِي الْقَرْنَيْنِ »</span>
+      <span class="verse-ref">سورەی کەهف — ٨٣</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════  CHAPTER SELECT  ═══════════════════════ -->
+<div id="chapter-screen" class="screen">
+  <div class="chapter-bg"></div>
+  <div class="screen-title">بەشەکانی یاری</div>
+  <div class="chapters-grid">
+
+    <div class="chapter-card" data-chapter="1">
+      <div class="chapter-num">I</div>
+      <div class="chapter-icon">🌅</div>
+      <div class="chapter-name">گەشتی ئاکام</div>
+      <div class="chapter-name-ar">المسير نحو المغرب</div>
+      <div class="chapter-desc">شوێنی ئاوبوونی خۆر — چاوەڕوانی شارستانیەکانی ئاڵوگۆڕ</div>
+      <div class="chapter-lock unlocked">✓ کراوەیە</div>
+    </div>
+
+    <div class="chapter-card locked" data-chapter="2">
+      <div class="chapter-num">II</div>
+      <div class="chapter-icon">🌄</div>
+      <div class="chapter-name">گەشتی ڕۆژهەڵات</div>
+      <div class="chapter-name-ar">المسير نحو المشرق</div>
+      <div class="chapter-desc">شوێنی هەڵدانی خۆر — خەڵکی بێ پرۆتیکشن</div>
+      <div class="chapter-lock">🔒 قفلکراوە</div>
+    </div>
+
+    <div class="chapter-card locked" data-chapter="3">
+      <div class="chapter-num">III</div>
+      <div class="chapter-icon">🏔</div>
+      <div class="chapter-name">دیواری ئایرۆن</div>
+      <div class="chapter-name-ar">سدّ يأجوج ومأجوج</div>
+      <div class="chapter-desc">دروستکردنی دیوار لە سەر ئەجوج و مەجوج</div>
+      <div class="chapter-lock">🔒 قفلکراوە</div>
+    </div>
+
+  </div>
+  <button class="menu-btn back-btn" id="btn-back-chapters">← گەڕانەوە</button>
+</div>
+
+<!-- ═══════════════════════  LORE SCREEN  ═══════════════════════ -->
+<div id="lore-screen" class="screen">
+  <div class="lore-content">
+    <div class="screen-title">► مێژووی ذوالقرنین</div>
+    <div class="lore-text">
+      <p>ذوالقرنین کەسایەتیەکی بەهێز و دادپەروەر بوو کە خوای گەورەی توانایی زۆری پێداوە و ئەرکی زۆری بەر دەستی کردبوو.</p>
+      <p>ئەو سێ گەشتی دیاریکراوی کرد:</p>
+      <ul>
+        <li><strong>گەشتی یەکەم ✦</strong> — بۆ لای ئاوبوونی خۆر، لە شوێنی کەوری تاریک. لەوێدا خەڵکێکی چەوسێنراو دیت و دادی بۆ ئەنجامدا.</li>
+        <li><strong>گەشتی دووەم ✦</strong> — بۆ لای هەڵدانی خۆر، خەڵکێک بوو تازەبوو بێ شوشەی سەروو. ئەو تاکو ئازادبون بەرپرسیاریەتی نویشتی ئەمان.</li>
+        <li><strong>گەشتی سێیەم ✦</strong> — نێوان دو شاخ، قەومێک لی داوا کرد دیوارێک بنا بۆ پاراستنیان لە یأجوج و مأجوج. ئەو دیواری ئایرۆن و مەسی دروستکرد.</li>
+      </ul>
+      <div class="verse-block">
+        <div>« قَالَ مَا مَكَّنِّي فِيهِ رَبِّي خَيْرٌ »</div>
+        <div class="verse-ref">سورەی کەهف — ٩٥</div>
+      </div>
+    </div>
+    <!-- Verse Gallery (populated by JS) -->
+    <div class="gallery-title">📖 ئایەتە کۆڵکراوەکان</div>
+    <div class="gallery-count" id="gallery-count"></div>
+    <div id="verse-gallery" class="verse-gallery"></div>
+
+    <button class="menu-btn back-btn" id="btn-back-lore">← گەڕانەوە</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════  SETTINGS SCREEN  ═══════════════════════ -->
+<div id="settings-screen" class="screen">
+  <div class="lore-content">
+    <div class="screen-title">⚙ ڕێکخستن</div>
+    <div class="settings-list">
+      <div class="setting-row">
+        <label>دەنگ</label>
+        <input type="range" id="setting-volume" min="0" max="100" value="70"/>
+      </div>
+      <div class="setting-row">
+        <label>حیسایەتی مایس</label>
+        <input type="range" id="setting-sensitivity" min="1" max="10" value="4"/>
+      </div>
+      <div class="setting-row">
+        <label>کوالیتی گرافیک</label>
+        <select id="setting-quality">
+          <option value="low">نزم</option>
+          <option value="medium" selected>ناوەند</option>
+          <option value="high">بەرز</option>
+          <option value="ultra">ئولترا</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <label>Field of View</label>
+        <input type="range" id="setting-fov" min="60" max="120" value="75"/>
+      </div>
+    </div>
+    <button class="menu-btn back-btn" id="btn-back-settings">← گەڕانەوە</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════  GAME CANVAS  ═══════════════════════ -->
+<div id="game-screen" class="screen">
+  <canvas id="game-canvas"></canvas>
+
+  <!-- Danger vignette -->
+  <div id="hp-vignette"></div>
+
+  <!-- Cinematic letterbox bars -->
+  <div id="letterbox-top"    class="letterbox-bar"></div>
+  <div id="letterbox-bottom" class="letterbox-bar"></div>
+
+  <!-- Boss health bar -->
+  <div id="boss-bar" class="hidden">
+    <div id="boss-bar-val">قایدی یاغوج</div>
+    <div id="boss-bar-track"><div id="boss-bar-fill"></div></div>
+  </div>
+
+  <!-- Kill streak banner -->
+  <div id="streak-banner"></div>
+
+  <!-- Quest log panel (J key) -->
+  <div id="quest-log-panel"></div>
+
+  <!-- Mobile touch controls -->
+  <div id="touch-controls" class="hidden">
+    <div id="joystick-zone">
+      <div id="joystick-base"></div>
+      <div id="joystick-knob"></div>
+    </div>
+    <div id="touch-look"></div>
+    <div id="touch-buttons">
+      <button id="tbtn-jump"     class="tbtn">&#x2191;</button>
+      <button id="tbtn-interact" class="tbtn">E</button>
+      <button id="tbtn-block"    class="tbtn">&#x1F6E1;</button>
+      <button id="tbtn-attack"   class="tbtn tbtn-attack">&#x2694;</button>
+    </div>
+  </div>
+
+  <!-- HUD -->
+  <div id="hud">
+    <div id="hud-top">
+      <div id="chapter-indicator"></div>
+      <div id="compass">
+        <div id="compass-needle">N</div>
+      </div>
+    </div>
+
+    <div id="crosshair">
+      <div class="ch-h"></div>
+      <div class="ch-v"></div>
+      <div class="ch-dot"></div>
+    </div>
+
+    <!-- bottom bar -->
+    <div id="hud-bottom">
+      <div id="objective-box">
+        <div id="obj-label">► ئامانجی ئێستا</div>
+        <div id="obj-text">دەستپێبکە...</div>
+      </div>
+      <div id="hud-bars">
+        <div id="health-bar">
+          <span class="bar-icon">♥</span>
+          <div class="bar-track"><div id="health-fill"></div></div>
+          <span id="health-val">100</span>
+        </div>
+        <div id="stamina-bar">
+          <span class="bar-icon">⚡</span>
+          <div class="bar-track"><div id="stamina-fill"></div></div>
+          <span id="stamina-val">100</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialogue box -->
+  <div id="dialogue-box" class="hidden">
+    <div id="dialogue-portrait"></div>
+    <div id="dialogue-body">
+      <div id="dialogue-speaker"></div>
+      <div id="dialogue-text"></div>
+      <div id="dialogue-arabic"></div>
+    </div>
+    <div id="dialogue-next">[ E ] بەردەوامبوون</div>
+  </div>
+
+  <!-- Verse popup -->
+  <div id="verse-popup" class="hidden">
+    <div id="verse-ar"></div>
+    <div id="verse-trans"></div>
+    <div id="verse-ref-pop"></div>
+  </div>
+
+  <!-- Interaction prompt -->
+  <div id="interact-prompt" class="hidden">[ E ] چالاکی</div>
+
+  <!-- Area label -->
+  <div id="area-label" class="hidden"></div>
+
+  <!-- Quest tracker -->
+  <div id="quest-tracker">
+    <div id="qt-title">📜 ئامانजەکان</div>
+    <div id="qt-list"></div>
+  </div>
+
+  <!-- Key hints -->
+  <div id="key-hints">
+    <span>WASD گەشت</span>
+    <span>🖱 LMB دەکوتێ</span>
+    <span>🖱 RMB پەناخەر</span>
+    <span>E قسەکردن / هەڵگرتن</span>
+    <span>Shift ڕکردن</span>
+    <span>ESC پاوستکردن</span>
+  </div>
+
+  <!-- Chapter intro -->
+  <div id="chapter-intro" class="hidden">
+    <div id="ci-num"></div>
+    <div id="ci-name"></div>
+    <div id="ci-desc"></div>
+  </div>
+
+  <!-- Chapter Transition (between chapters) -->
+  <div id="chapter-transition" class="hidden">
+    <div class="ct-verse" id="ct-verse"></div>
+    <div class="ct-msg"   id="ct-msg"></div>
+    <div class="ct-btns">
+      <button class="menu-btn primary" id="ct-next">▶ بەشی دواتر</button>
+      <button class="menu-btn"         id="ct-menu">↩ منیوی سەرەکی</button>
+    </div>
+  </div>
+
+  <!-- Loading overlay -->
+  <div id="loading-overlay">
+    <div class="loading-title-ar">ذو القرنين</div>
+    <div class="loading-spinner"></div>
+    <div class="loading-text">بارکردنی جیهان...</div>
+    <div class="loading-bar"><div id="loading-fill"></div></div>
+    <div class="loading-verse" id="loading-verse"></div>
+  </div>
+
+  <!-- Pointer Lock overlay -->
+  <div id="lock-overlay">
+    <div class="lock-msg">&#x1F5B1; کلیک بکە بۆ دەستپێکردن</div>
+    <div class="lock-msg-touch">&#x1F446; دەست بدە بۆ دەستپێکردن</div>
+    <div class="lock-sub">ESC بکە بۆ دەرچوون</div>
+  </div>
+
+  <!-- Pause Menu -->
+  <div id="pause-menu" class="hidden">
+    <div class="pause-title">⏸ پاوستکراوە</div>
+    <button class="menu-btn" id="btn-resume">▶ بەردەوامبوون</button>
+    <button class="menu-btn" id="btn-to-menu">↩ منیوی سەرەکی</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════  SHADERS  ═══════════════════════ -->
+<script id="vert-sky" type="x-shader/x-vertex">
+  varying vec3 vWorldPosition;
+  void main(){
+    vec4 worldPos = modelMatrix * vec4(position, 1.0);
+    vWorldPosition = worldPos.xyz;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+</script>
+
+<script id="frag-sky-west" type="x-shader/x-fragment">
+  uniform float uTime;
+  varying vec3 vWorldPosition;
+  void main(){
+    vec3 dir = normalize(vWorldPosition);
+    float y = dir.y * 0.5 + 0.5;
+    vec3 top = vec3(0.05, 0.05, 0.2);
+    vec3 mid = vec3(0.8, 0.3, 0.05);
+    vec3 bot = vec3(0.95, 0.6, 0.1);
+    float glow = sin(uTime * 0.3) * 0.05;
+    vec3 col = mix(bot, mix(mid, top, smoothstep(0.3, 0.8, y)), smoothstep(0.0, 0.3, y));
+    col += glow * vec3(1.0, 0.4, 0.0);
+    gl_FragColor = vec4(col, 1.0);
+  }
+</script>
+
+<script id="frag-sky-east" type="x-shader/x-fragment">
+  uniform float uTime;
+  varying vec3 vWorldPosition;
+  void main(){
+    vec3 dir = normalize(vWorldPosition);
+    float y = dir.y * 0.5 + 0.5;
+    vec3 top = vec3(0.02, 0.05, 0.15);
+    vec3 mid = vec3(0.5, 0.7, 0.9);
+    vec3 bot = vec3(0.95, 0.85, 0.55);
+    float glow = sin(uTime * 0.3 + 1.57) * 0.05;
+    vec3 col = mix(bot, mix(mid, top, smoothstep(0.3, 0.9, y)), smoothstep(0.0, 0.35, y));
+    col += glow * vec3(0.9, 0.7, 0.2);
+    gl_FragColor = vec4(col, 1.0);
+  }
+</script>
+
+<script id="frag-sky-wall" type="x-shader/x-fragment">
+  uniform float uTime;
+  varying vec3 vWorldPosition;
+  void main(){
+    vec3 dir = normalize(vWorldPosition);
+    float y = dir.y * 0.5 + 0.5;
+    vec3 top = vec3(0.1, 0.1, 0.1);
+    vec3 mid = vec3(0.3, 0.3, 0.35);
+    vec3 bot = vec3(0.5, 0.4, 0.3);
+    vec3 col = mix(bot, mix(mid, top, smoothstep(0.2, 0.8, y)), smoothstep(0.0, 0.2, y));
+    gl_FragColor = vec4(col, 1.0);
+  }
+</script>
+
+<script src="js/narrative.js"></script>
+<script src="js/effects.js"></script>
+<script src="js/world.js"></script>
+<script src="js/player.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/npc.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/game.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
