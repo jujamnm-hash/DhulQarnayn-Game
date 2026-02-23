@@ -320,9 +320,11 @@ class Game {
         if (v) this._showVerse(v.ar, v.ku, v.ref, 7000);
         this.running = true;
         this.paused  = false;
-        /* Unlock pointer */
-        document.getElementById('lock-overlay') &&
-          document.getElementById('lock-overlay').classList.remove('hidden');
+        /* Show lock overlay only on desktop (touch devices bypass pointer lock) */
+        if (!('ontouchstart' in window)) {
+          document.getElementById('lock-overlay') &&
+            document.getElementById('lock-overlay').classList.remove('hidden');
+        }
       }
     );
   }
